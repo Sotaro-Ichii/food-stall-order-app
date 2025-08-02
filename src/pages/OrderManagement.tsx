@@ -49,7 +49,7 @@ const OrderManagement: React.FC = () => {
   }
 
   return (
-    <div className="p-4 pb-20 min-h-screen bg-gray-50">
+    <div className="p-4 pb-24 min-h-screen bg-gray-50 overflow-y-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">Order Management</h1>
         <div className="bg-orange-100 rounded-lg p-4 border border-orange-200">

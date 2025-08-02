@@ -18,7 +18,7 @@ const OrderEntry: React.FC = () => {
   };
 
   return (
-    <div className="p-4 pb-20 min-h-screen bg-gray-50">
+    <div className="p-4 pb-24 min-h-screen bg-gray-50 overflow-y-auto">
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-2xl font-bold text-gray-800">Create New Order</h1>
