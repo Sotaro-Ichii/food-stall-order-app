@@ -27,8 +27,8 @@ function App() {
   return (
     <AuthProvider>
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-          <div className="flex-1 overflow-hidden">
+        <div className="h-full bg-gray-50 flex flex-col">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden">
             {renderCurrentPage()}
           </div>
           <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />

@@ -239,7 +239,7 @@ const Analytics: React.FC = () => {
   const bestSellingItem = dailySales[0];
 
   return (
-    <div className="p-4 pb-24 min-h-screen bg-gray-50 overflow-y-auto">
+    <div className="p-4 pb-24 bg-gray-50 h-full">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">Daily Analytics</h1>
         
