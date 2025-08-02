@@ -75,7 +75,7 @@ const MenuManagement: React.FC<MenuManagementProps> = ({ onClose }) => {
 
         <div className="p-4 border-b border-gray-200">
           <form onSubmit={handleAddItem} className="space-y-3">
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 value={newItemName}
@@ -84,23 +84,25 @@ const MenuManagement: React.FC<MenuManagementProps> = ({ onClose }) => {
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 disabled={isAdding}
               />
-              <input
-                type="number"
-                value={newItemPrice}
-                onChange={(e) => setNewItemPrice(e.target.value)}
-                placeholder="価格"
-                min="1"
-                step="1"
-                className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                disabled={isAdding}
-              />
-              <button
-                type="submit"
-                disabled={isAdding || !newItemName.trim() || !newItemPrice.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg flex items-center transition-colors"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  value={newItemPrice}
+                  onChange={(e) => setNewItemPrice(e.target.value)}
+                  placeholder="価格"
+                  min="1"
+                  step="1"
+                  className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isAdding}
+                />
+                <button
+                  type="submit"
+                  disabled={isAdding || !newItemName.trim() || !newItemPrice.trim()}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg flex items-center justify-center transition-colors min-w-[44px]"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </form>
         </div>

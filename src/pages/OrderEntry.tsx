@@ -46,7 +46,7 @@ const OrderEntry: React.FC = () => {
           <p className="text-gray-500 mb-4">メニューがありません</p>
           <button
             onClick={() => setShowMenuManagement(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center mx-auto"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center mx-auto w-full sm:w-auto"
           >
             <Plus className="w-4 h-4 mr-2" />
             メニューを追加
