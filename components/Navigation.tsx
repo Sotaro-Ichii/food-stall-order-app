@@ -12,6 +12,12 @@ export const Navigation: React.FC = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
+    if (!auth) {
+      console.error('Firebase認証が初期化されていません。');
+      router.push('/login');
+      return;
+    }
+
     try {
       await signOut(auth);
       router.push('/login');
