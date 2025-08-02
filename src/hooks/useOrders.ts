@@ -53,9 +53,13 @@ export const useOrders = () => {
       throw new Error('ログインが必要です');
     }
 
+    if (!itemName.trim()) {
+      throw new Error('メニュー名が無効です');
+    }
+
     try {
       await addDoc(collection(db, 'orders'), {
-        itemName,
+        itemName: itemName.trim(),
         quantity: 1,
         status: 'completed',
         createdAt: Timestamp.now(),
@@ -67,27 +71,7 @@ export const useOrders = () => {
     }
   };
 
-  const updateOrderStatus = async (orderId: string, status: Order['status'], completedAt?: Date) => {
-    if (!currentUser) {
-      throw new Error('ログインが必要です');
-    }
 
-    try {
-      const orderRef = doc(db, 'orders', orderId);
-      const updateData: any = { status };
-      if (completedAt) {
-        updateData.completedAt = Timestamp.fromDate(completedAt);
-      }
-      await updateDoc(orderRef, updateData);
-    } catch (error) {
-      console.error('Error updating order:', error);
-      throw error;
-    }
-  };
-
-  const completeOrder = async (orderId: string) => {
-    await updateOrderStatus(orderId, 'completed', new Date());
-  };
 
   const cancelOrder = async (orderId: string) => {
     if (!currentUser) {

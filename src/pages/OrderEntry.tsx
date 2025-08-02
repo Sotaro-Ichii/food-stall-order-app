@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Plus, Settings } from 'lucide-react';
 import { useOrders } from '../hooks/useOrders';
 import { useMenuItems } from '../hooks/useMenuItems';
@@ -16,6 +16,27 @@ const OrderEntry: React.FC = () => {
       console.error('Error creating order:', error);
     }
   };
+
+  const menuItemsGrid = useMemo(() => (
+    <div className="grid grid-cols-2 gap-4">
+      {menuItems.map((item) => (
+        <button
+          key={item.id}
+          onClick={() => handleOrderCreate(item.name)}
+          className="bg-white hover:bg-blue-50 border-2 border-blue-200 hover:border-blue-400 rounded-xl p-4 sm:p-6 transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-sm min-h-[120px] flex flex-col justify-center"
+        >
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="bg-blue-100 rounded-full p-2 sm:p-3 mb-2 sm:mb-3 flex-shrink-0">
+              <Plus className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
+            </div>
+            <span className="font-semibold text-gray-800 text-center text-sm sm:text-base leading-tight">
+              {item.name}
+            </span>
+          </div>
+        </button>
+      ))}
+    </div>
+  ), [menuItems, handleOrderCreate]);
 
   return (
     <div className="p-4 pb-24 bg-gray-50 h-full">
@@ -53,24 +74,7 @@ const OrderEntry: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleOrderCreate(item.name)}
-              className="bg-white hover:bg-blue-50 border-2 border-blue-200 hover:border-blue-400 rounded-xl p-4 sm:p-6 transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-sm min-h-[120px] flex flex-col justify-center"
-            >
-              <div className="flex flex-col items-center justify-center h-full">
-                <div className="bg-blue-100 rounded-full p-2 sm:p-3 mb-2 sm:mb-3 flex-shrink-0">
-                  <Plus className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
-                </div>
-                <span className="font-semibold text-gray-800 text-center text-sm sm:text-base leading-tight">
-                  {item.name}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
+        menuItemsGrid
       )}
 
       <div className="mt-8 text-center text-gray-500">

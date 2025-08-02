@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Check, Clock, ChevronDown, ChevronUp, X } from 'lucide-react';
+import React from 'react';
+import { Check, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { useOrders } from '../hooks/useOrders';
 

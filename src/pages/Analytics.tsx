@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BarChart3, Download, RefreshCw, Calendar, TrendingUp, Clock, Target, Award } from 'lucide-react';
 import { collection, query, where, getDocs, writeBatch, doc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { format, startOfWeek, endOfWeek, subDays, isToday } from 'date-fns';
+import { format, startOfWeek, endOfWeek, isToday } from 'date-fns';
 import { useAuth } from '../context/AuthContext';
 import { useMenuItems } from '../hooks/useMenuItems';
 
