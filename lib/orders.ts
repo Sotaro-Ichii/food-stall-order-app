@@ -30,6 +30,10 @@ export const MENU_ITEMS = [
 
 // 新しい注文を作成
 export const createOrder = async (itemName: string): Promise<void> => {
+  if (!db) {
+    throw new Error('Firestoreが初期化されていません。');
+  }
+
   try {
     await addDoc(collection(db, 'orders'), {
       itemName,
@@ -47,6 +51,11 @@ export const subscribeToPendingOrders = (
   callback: (orders: Order[]) => void,
   limitCount: number = 100
 ) => {
+  if (!db) {
+    console.error('Firestoreが初期化されていません。');
+    return () => {};
+  }
+
   const q = query(
     collection(db, 'orders'),
     where('status', '==', 'pending'),
@@ -71,6 +80,10 @@ export const subscribeToPendingOrders = (
 
 // 注文を完了としてマーク
 export const markOrderAsCompleted = async (orderId: string): Promise<void> => {
+  if (!db) {
+    throw new Error('Firestoreが初期化されていません。');
+  }
+
   try {
     const orderRef = doc(db, 'orders', orderId);
     await updateDoc(orderRef, {
@@ -85,6 +98,10 @@ export const markOrderAsCompleted = async (orderId: string): Promise<void> => {
 
 // 今日の注文統計を取得
 export const getTodayStats = async (): Promise<{ [itemName: string]: number }> => {
+  if (!db) {
+    throw new Error('Firestoreが初期化されていません。');
+  }
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   

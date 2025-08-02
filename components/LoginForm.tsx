@@ -17,6 +17,12 @@ export const LoginForm: React.FC = () => {
     setLoading(true);
     setError('');
 
+    if (!auth) {
+      setError('Firebase認証が初期化されていません。');
+      setLoading(false);
+      return;
+    }
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/orders');
