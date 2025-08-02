@@ -57,8 +57,9 @@ export const useOrders = () => {
       await addDoc(collection(db, 'orders'), {
         itemName,
         quantity: 1,
-        status: 'pending',
-        createdAt: Timestamp.now()
+        status: 'completed',
+        createdAt: Timestamp.now(),
+        completedAt: Timestamp.now()
       });
     } catch (error) {
       console.error('Error adding order:', error);
@@ -101,7 +102,6 @@ export const useOrders = () => {
     }
   };
 
-  const pendingOrders = orders.filter(order => order.status === 'pending');
   const completedOrders = orders.filter(order => {
     if (order.status !== 'completed' || !order.completedAt) return false;
     const today = format(new Date(), 'yyyy-MM-dd');
@@ -109,5 +109,5 @@ export const useOrders = () => {
     return today === orderDate;
   });
 
-  return { pendingOrders, completedOrders, loading, error, addOrder, completeOrder, cancelOrder };
+  return { completedOrders, loading, error, addOrder, cancelOrder };
 };

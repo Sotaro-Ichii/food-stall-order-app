@@ -5,7 +5,7 @@ import { useMenuItems } from '../hooks/useMenuItems';
 import MenuManagement from '../components/MenuManagement';
 
 const OrderEntry: React.FC = () => {
-  const { pendingOrders, addOrder } = useOrders();
+  const { completedOrders, addOrder } = useOrders();
   const { menuItems, loading: menuLoading } = useMenuItems();
   const [showMenuManagement, setShowMenuManagement] = React.useState(false);
 
@@ -29,9 +29,9 @@ const OrderEntry: React.FC = () => {
             <Settings className="w-6 h-6 text-gray-600" />
           </button>
         </div>
-        <div className="bg-blue-100 rounded-lg p-4 border border-blue-200">
-          <p className="text-blue-800 font-semibold text-lg">
-            Active Orders: {pendingOrders.length}
+        <div className="bg-green-100 rounded-lg p-4 border border-green-200">
+          <p className="text-green-800 font-semibold text-lg">
+            Today's Orders: {completedOrders.length}
           </p>
         </div>
       </div>
@@ -74,7 +74,7 @@ const OrderEntry: React.FC = () => {
       )}
 
       <div className="mt-8 text-center text-gray-500">
-        <p className="text-sm">Tap any item to create a new order</p>
+        <p className="text-sm">Tap any item to complete an order</p>
       </div>
 
       {showMenuManagement && (
