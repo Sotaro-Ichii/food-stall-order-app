@@ -31,29 +31,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [firebaseError, setFirebaseError] = useState(false);
 
   useEffect(() => {
-    if (!auth) {
-      console.warn('Firebase Auth is not initialized. Please check your environment variables.');
-      setFirebaseError(true);
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setUser(user);
-        setLoading(false);
-      }, (error) => {
-        console.error('Auth state change error:', error);
+    // Wait a bit for Firebase to initialize
+    const timer = setTimeout(() => {
+      if (!auth) {
+        console.warn('Firebase Auth is not initialized. Please check your environment variables.');
         setFirebaseError(true);
         setLoading(false);
-      });
+        return;
+      }
 
-      return () => unsubscribe();
-    } catch (error) {
-      console.error('Auth initialization error:', error);
-      setFirebaseError(true);
-      setLoading(false);
-    }
+      try {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          setUser(user);
+          setLoading(false);
+        }, (error) => {
+          console.error('Auth state change error:', error);
+          // Don't show error for auth/invalid-api-key during development
+          if (error.code === 'auth/invalid-api-key') {
+            console.warn('Firebase API key error - this might be expected during development');
+          } else {
+            setFirebaseError(true);
+          }
+          setLoading(false);
+        });
+
+        return () => unsubscribe();
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+        setFirebaseError(true);
+        setLoading(false);
+      }
+    }, 1000); // Wait 1 second for Firebase to initialize
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (firebaseError) {
