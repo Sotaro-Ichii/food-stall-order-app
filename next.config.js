@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // App router is now stable, no need for experimental flag
+  // Disable static generation for pages that use Firebase
+  experimental: {
+    appDir: true,
+  },
+  // Force dynamic rendering for all pages
+  output: 'standalone',
+  // Disable static optimization
+  trailingSlash: false,
+  generateEtags: false,
 }
 
 module.exports = nextConfig 

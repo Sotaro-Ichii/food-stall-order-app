@@ -7,6 +7,9 @@ import { MENU_ITEMS, createOrder, subscribeToPendingOrders } from '@/lib/orders'
 import { Order } from '@/types';
 import { Plus, Check } from 'lucide-react';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default function OrdersPage() {
   const [pendingOrders, setPendingOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);

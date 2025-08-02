@@ -9,6 +9,9 @@ import { Check, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default function ManagePage() {
   const [pendingOrders, setPendingOrders] = useState<Order[]>([]);
   const [completedOrders, setCompletedOrders] = useState<Order[]>([]);

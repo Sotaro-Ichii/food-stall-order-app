@@ -8,6 +8,9 @@ import { BarChart3, Download, RotateCcw } from 'lucide-react';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default function AnalyticsPage() {
   const [stats, setStats] = useState<{ [itemName: string]: number }>({});
   const [loading, setLoading] = useState(true);
