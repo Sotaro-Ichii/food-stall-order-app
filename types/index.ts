@@ -1,10 +1,6 @@
 export interface Order {
   id: string;
   itemName: string;
-<<<<<<< HEAD
-  quantity: number;
-=======
->>>>>>> 9b74d41 (change responsible design)
   status: 'pending' | 'completed';
   createdAt: Date;
   completedAt?: Date;
@@ -14,16 +10,6 @@ export interface MenuItem {
   id: string;
   name: string;
   price: number;
-<<<<<<< HEAD
-  createdAt: Date;
-}
-
-export interface DailySales {
-  itemName: string;
-  quantity: number;
-  date: string;
-}
-=======
   category: string;
 }
 
@@ -34,4 +20,3 @@ export interface DailyStats {
   };
   totalOrders: number;
 } 
->>>>>>> 9b74d41 (change responsible design)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Food Stall Order Management System
 
 A mobile-first web application designed to digitize paper-based order workflows for food stalls and small restaurants.
@@ -20,6 +21,66 @@ A mobile-first web application designed to digitize paper-based order workflows 
 4. Copy your Firebase config and replace the placeholder in `src/config/firebase.ts`
 
 ### 2. Firestore Security Rules
+=======
+# 屋台注文管理アプリ
+
+屋台の注文をデジタルで管理するWebアプリケーションです。紙ベースのワークフローをデジタル化し、効率的な注文管理を実現します。
+
+## 機能
+
+- **認証機能**: Firebase Authenticationを使用したログイン
+- **注文入力**: 大きなボタンで簡単な注文入力
+- **注文管理**: 保留中・完了済み注文の管理
+- **売上分析**: 日次売上統計とCSVエクスポート
+- **リアルタイム更新**: Firestoreを使用したリアルタイムデータ同期
+- **モバイル対応**: レスポンシブデザインでモバイルフレンドリー
+
+## 技術スタック
+
+- **フロントエンド**: Next.js 14, React 18, TypeScript
+- **スタイリング**: Tailwind CSS
+- **バックエンド**: Firebase (Firestore, Authentication)
+- **デプロイ**: Vercel
+
+## セットアップ手順
+
+### 1. リポジトリのクローン
+
+```bash
+git clone <repository-url>
+cd food-stall-order-app
+```
+
+### 2. 依存関係のインストール
+
+```bash
+npm install
+```
+
+### 3. Firebaseプロジェクトの設定
+
+1. [Firebase Console](https://console.firebase.google.com/)で新しいプロジェクトを作成
+2. Authenticationを有効化し、メール/パスワード認証を設定
+3. Firestore Databaseを作成
+4. プロジェクト設定からWebアプリを追加し、設定情報を取得
+
+### 4. 環境変数の設定
+
+`.env.local`ファイルを作成し、以下の環境変数を設定：
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
+
+### 5. Firestoreセキュリティルールの設定
+
+Firestoreのセキュリティルールを以下のように設定：
+>>>>>>> 9b74d41 (change responsible design)
 
 ```javascript
 rules_version = '2';
@@ -28,13 +89,17 @@ service cloud.firestore {
     match /orders/{document} {
       allow read, write: if request.auth != null;
     }
+<<<<<<< HEAD
     match /menuItems/{document} {
       allow read, write: if request.auth != null;
     }
+=======
+>>>>>>> 9b74d41 (change responsible design)
   }
 }
 ```
 
+<<<<<<< HEAD
 ### 3. Firestore Indexes
 
 Create the following indexes:
@@ -119,3 +184,49 @@ This project is ready for deployment on Vercel. See [DEPLOYMENT.md](./DEPLOYMENT
 3. Deploy with default Vite settings
 
 The app will automatically build and deploy. No additional configuration needed!
+=======
+### 6. 開発サーバーの起動
+
+```bash
+npm run dev
+```
+
+アプリケーションは `http://localhost:3000` で起動します。
+
+### 7. Vercelへのデプロイ
+
+1. [Vercel](https://vercel.com/)にアカウントを作成
+2. GitHubリポジトリを接続
+3. 環境変数をVercelプロジェクト設定で設定
+4. デプロイを実行
+
+## 使用方法
+
+### ログイン
+- 初回アクセス時にログイン画面が表示されます
+- Firebase Authenticationで設定したメールアドレスとパスワードでログイン
+
+### 注文入力
+- 各メニューアイテムの大きなボタンをタップして注文を作成
+- 保留中の注文数が上部に表示されます
+
+### 注文管理
+- 保留中の注文一覧を確認
+- 「完了」ボタンで注文を完了としてマーク
+- 完了済み注文は折りたたみ可能なセクションに移動
+
+### 売上分析
+- 今日の売上統計を確認
+- CSVファイルとしてエクスポート可能
+- 日次リセット機能
+
+## パフォーマンス最適化
+
+- 保留中注文は最新100件まで表示（レンダリング負荷軽減）
+- リアルタイム更新でスムーズな操作感
+- 1日10,000件の注文に対応
+
+## ライセンス
+
+MIT License
+>>>>>>> 9b74d41 (change responsible design)
