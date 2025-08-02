@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { User, onAuthStateChanged, AuthError } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { FirebaseError } from '@/components/FirebaseError';
 
@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           setUser(user);
           setLoading(false);
-        }, (error) => {
+        }, (error: AuthError) => {
           console.error('Auth state change error:', error);
           // Don't show error for auth/invalid-api-key during development
           if (error.code === 'auth/invalid-api-key') {
