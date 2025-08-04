@@ -168,7 +168,7 @@ const Analytics: React.FC = () => {
   const exportToCSV = () => {
     const csvContent = [
       'Item Name,Quantity Sold,Revenue',
-      ...dailySales.map(item => `${item.itemName},${item.quantity},¥${item.revenue}`)
+      ...dailySales.map(item => `${item.itemName},${item.quantity},$${item.revenue}`)
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -259,7 +259,7 @@ const Analytics: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-green-600 text-sm font-medium">Revenue</p>
-                <p className="text-green-800 font-bold text-2xl">¥{totalRevenue.toLocaleString()}</p>
+                <p className="text-green-800 font-bold text-2xl">${totalRevenue.toLocaleString()}</p>
               </div>
               <TrendingUp className="w-8 h-8 text-green-600" />
             </div>
@@ -414,7 +414,7 @@ const Analytics: React.FC = () => {
                     </div>
                     <div>
                       <span className="font-medium text-gray-800">{item.itemName}</span>
-                      <p className="text-sm text-gray-500">¥{item.revenue.toLocaleString()}</p>
+                      <p className="text-sm text-gray-500">${item.revenue.toLocaleString()}</p>
                     </div>
                   </div>
                   <div className="flex items-center">

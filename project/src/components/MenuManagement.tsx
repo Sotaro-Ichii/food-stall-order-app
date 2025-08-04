@@ -121,7 +121,7 @@ const MenuManagement: React.FC<MenuManagementProps> = ({ onClose }) => {
                 <div key={item.id} className="p-4 flex items-center justify-between">
                   <div>
                     <span className="font-medium text-gray-800">{item.name}</span>
-                    <p className="text-sm text-gray-500">¥{item.price?.toLocaleString() || '価格未設定'}</p>
+                    <p className="text-sm text-gray-500">${item.price?.toLocaleString() || '価格未設定'}</p>
                   </div>
                   <button
                     onClick={() => handleDeleteItem(item.id, item.name)}
