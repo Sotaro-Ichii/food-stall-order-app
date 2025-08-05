@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { ChefHat, Mail, Lock, AlertCircle } from 'lucide-react';
+import { ChefHat, Mail, Lock, AlertCircle, UserPlus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const [isSignup, setIsSignup] = useState(false);
+  const { login, signup } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,13 +19,32 @@ const Login: React.FC = () => {
       return;
     }
 
+    if (isSignup && password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    if (isSignup && password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+
     try {
       setError('');
       setLoading(true);
-      await login(email, password);
+      
+      if (isSignup) {
+        await signup(email, password);
+      } else {
+        await login(email, password);
+      }
     } catch (error: any) {
-      setError('Failed to log in. Please check your credentials.');
-      console.error('Login error:', error);
+      if (isSignup) {
+        setError('Failed to create account. Please try again.');
+      } else {
+        setError('Failed to log in. Please check your credentials.');
+      }
+      console.error(isSignup ? 'Signup error:' : 'Login error:', error);
     } finally {
       setLoading(false);
     }
@@ -37,7 +58,9 @@ const Login: React.FC = () => {
             <ChefHat className="w-8 h-8 text-orange-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-800">Food Stall Manager</h1>
-          <p className="text-gray-600 mt-2">Sign in to manage your orders</p>
+          <p className="text-gray-600 mt-2">
+            {isSignup ? 'Create a new account' : 'Sign in to manage your orders'}
+          </p>
         </div>
 
         {error && (
@@ -78,25 +101,78 @@ const Login: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your password"
+                placeholder={isSignup ? "Enter your password (min 6 characters)" : "Enter your password"}
                 required
               />
             </div>
           </div>
+
+          {isSignup && (
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Confirm your password"
+                  required
+                />
+              </div>
+            </div>
+          )}
 
           <button
             type="submit"
             disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 rounded-lg transition-colors"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading 
+              ? (isSignup ? 'Creating account...' : 'Signing in...') 
+              : (isSignup ? 'Create Account' : 'Sign In')
+            }
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-gray-600 text-sm">
-            Demo credentials: demo@foodstall.com / password123
-          </p>
+          {!isSignup && (
+            <p className="text-gray-600 text-sm mb-4">
+              Demo credentials: demo@foodstall.com / password123
+            </p>
+          )}
+          
+          <div className="border-t border-gray-200 pt-4">
+            <p className="text-gray-600 text-sm mb-3">
+              {isSignup ? 'Already have an account?' : "Don't have an account?"}
+            </p>
+            <button
+              onClick={() => {
+                setIsSignup(!isSignup);
+                setError('');
+                setEmail('');
+                setPassword('');
+                setConfirmPassword('');
+              }}
+              className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center justify-center mx-auto"
+            >
+              {isSignup ? (
+                <>
+                  <Mail className="w-4 h-4 mr-1" />
+                  Sign In Instead
+                </>
+              ) : (
+                <>
+                  <UserPlus className="w-4 h-4 mr-1" />
+                  Create New Account
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>
