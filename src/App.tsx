@@ -60,9 +60,12 @@ function AppContent() {
             <button
               onClick={async () => {
                 try {
+                  console.log('ログアウト開始');
                   await logout();
+                  console.log('ログアウト完了');
                   // ログアウト後にページをリロードして確実にログイン画面に戻る
-                  window.location.reload();
+                  console.log('ページリロード開始');
+                  window.location.href = '/';
                 } catch (error) {
                   console.error('Logout error:', error);
                 }

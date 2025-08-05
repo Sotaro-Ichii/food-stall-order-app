@@ -47,9 +47,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
+    console.log('AuthContext: ログアウト処理開始');
     await signOut(auth);
+    console.log('AuthContext: Firebase認証からログアウト完了');
     // ログアウト時に承認状態もリセット
     setIsApproved(false);
+    setCurrentUser(null);
+    console.log('AuthContext: 状態リセット完了');
   };
 
   const checkApproval = async (email: string): Promise<boolean> => {
@@ -76,13 +80,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log('AuthContext: 認証状態変更', user ? 'ログイン' : 'ログアウト');
       setCurrentUser(user);
       
       if (user) {
         // ユーザーがログインしたら承認状態をチェック
+        console.log('AuthContext: 承認状態チェック開始');
         const approved = await checkApproval(user.email || '');
         setIsApproved(approved);
+        console.log('AuthContext: 承認状態', approved);
       } else {
+        console.log('AuthContext: ユーザーなし、承認状態をfalseに設定');
         setIsApproved(false);
       }
       
