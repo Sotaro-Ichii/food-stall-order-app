@@ -20,7 +20,7 @@ function App() {
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<Page>('entry');
   const [showUserApproval, setShowUserApproval] = useState(false);
-  const { isApproved } = useAuth();
+  const { isApproved, logout } = useAuth();
 
   const renderCurrentPage = () => {
     switch (currentPage) {
@@ -50,12 +50,26 @@ function AppContent() {
             アカウントの承認をお待ちください。<br />
             管理者が承認すると、アプリケーションを使用できるようになります。
           </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-          >
-            再確認
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors w-full"
+            >
+              再確認
+            </button>
+            <button
+              onClick={async () => {
+                try {
+                  await logout();
+                } catch (error) {
+                  console.error('Logout error:', error);
+                }
+              }}
+              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors w-full"
+            >
+              ログアウト
+            </button>
+          </div>
         </div>
       </div>
     );
