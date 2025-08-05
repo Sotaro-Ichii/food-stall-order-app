@@ -146,12 +146,6 @@ const Login: React.FC = () => {
         </form>
 
         <div className="mt-6 text-center">
-          {!isSignup && (
-            <p className="text-gray-600 text-sm mb-4">
-              Demo credentials: demo@foodstall.com / password123
-            </p>
-          )}
-          
           <div className="border-t border-gray-200 pt-4">
             <p className="text-gray-600 text-sm mb-3">
               {isSignup ? 'Already have an account?' : "Don't have an account?"}
