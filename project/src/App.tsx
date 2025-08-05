@@ -6,6 +6,7 @@ import OrderEntry from './pages/OrderEntry';
 import OrderManagement from './pages/OrderManagement';
 import Analytics from './pages/Analytics';
 import UserApproval from './components/UserApproval';
+import Login from './pages/Login';
 
 type Page = 'entry' | 'management' | 'analytics';
 
@@ -20,7 +21,7 @@ function App() {
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<Page>('entry');
   const [showUserApproval, setShowUserApproval] = useState(false);
-  const { isApproved, logout } = useAuth();
+  const { isApproved, logout, currentUser } = useAuth();
 
   const renderCurrentPage = () => {
     switch (currentPage) {
@@ -34,6 +35,11 @@ function AppContent() {
         return <OrderEntry />;
     }
   };
+
+  // ユーザーがログインしていない場合はログイン画面を表示
+  if (!currentUser) {
+    return <Login />;
+  }
 
   // 承認されていない場合は承認待ち画面を表示
   if (!isApproved) {
@@ -63,9 +69,9 @@ function AppContent() {
                   console.log('ログアウト開始');
                   await logout();
                   console.log('ログアウト完了');
-                  // ログアウト後にページをリロードして確実にログイン画面に戻る
+                  // ログアウト後に強制的にページをリロード
                   console.log('ページリロード開始');
-                  window.location.href = '/';
+                  window.location.replace('/');
                 } catch (error) {
                   console.error('Logout error:', error);
                 }
