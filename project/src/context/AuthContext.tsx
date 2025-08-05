@@ -48,6 +48,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     await signOut(auth);
+    // ログアウト時に承認状態もリセット
+    setIsApproved(false);
   };
 
   const checkApproval = async (email: string): Promise<boolean> => {

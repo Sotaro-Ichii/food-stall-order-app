@@ -61,6 +61,8 @@ function AppContent() {
               onClick={async () => {
                 try {
                   await logout();
+                  // ログアウト後にページをリロードして確実にログイン画面に戻る
+                  window.location.reload();
                 } catch (error) {
                   console.error('Logout error:', error);
                 }
