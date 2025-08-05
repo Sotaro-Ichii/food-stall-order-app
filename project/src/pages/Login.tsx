@@ -40,9 +40,15 @@ const Login: React.FC = () => {
       }
     } catch (error: any) {
       if (isSignup) {
-        setError('Failed to create account. Please try again.');
+        setError('アカウントが作成されました。管理者の承認をお待ちください。');
       } else {
-        setError('Failed to log in. Please check your credentials.');
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+          setError('メールアドレスまたはパスワードが正しくありません。');
+        } else if (error.code === 'auth/user-disabled') {
+          setError('アカウントが無効化されています。');
+        } else {
+          setError('ログインに失敗しました。認証情報を確認してください。');
+        }
       }
       console.error(isSignup ? 'Signup error:' : 'Login error:', error);
     } finally {

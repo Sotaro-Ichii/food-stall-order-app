@@ -1,14 +1,15 @@
 import React from 'react';
-import { ShoppingCart, ClipboardList, BarChart3, LogOut } from 'lucide-react';
+import { ShoppingCart, ClipboardList, BarChart3, LogOut, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 interface NavigationProps {
   currentPage: 'entry' | 'management' | 'analytics';
   onPageChange: (page: 'entry' | 'management' | 'analytics') => void;
+  onShowUserApproval: () => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) => {
-  const { logout } = useAuth();
+const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange, onShowUserApproval }) => {
+  const { logout, currentUser } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -56,6 +57,17 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
           <BarChart3 size={24} />
           <span className="text-xs mt-1">Analytics</span>
         </button>
+        
+        {/* 管理者のみにユーザー承認管理ボタンを表示 */}
+        {currentUser?.email === 'demo@foodstall.com' && (
+          <button
+            onClick={onShowUserApproval}
+            className="flex flex-col items-center p-2 rounded-lg text-purple-600 hover:bg-purple-50 transition-colors"
+          >
+            <Users size={24} />
+            <span className="text-xs mt-1">Users</span>
+          </button>
+        )}
         
         <button
           onClick={handleLogout}
